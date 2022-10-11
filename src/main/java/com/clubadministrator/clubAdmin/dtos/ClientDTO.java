@@ -14,4 +14,16 @@ public class ClientDTO {
     private Date startDate;
     private Date activeUntilDate;
     private Boolean isActive;
+
+    public ClientDTO(Long id, String firstName, String lastName, Date startDate, Date activeUntilDate, Boolean isActive) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.startDate = startDate;
+        this.activeUntilDate = activeUntilDate;
+        this.isActive = isActive;
+    }
+
+    public ClientDTO() {
+    }
 }

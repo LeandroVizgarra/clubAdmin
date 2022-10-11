@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Client {
+public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
