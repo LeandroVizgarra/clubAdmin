@@ -1,9 +1,12 @@
 package com.clubadministrator.clubAdmin.mapper;
 
+import com.clubadministrator.clubAdmin.dtos.ClientBasicDTO;
 import com.clubadministrator.clubAdmin.dtos.ClientDTO;
 import com.clubadministrator.clubAdmin.entities.ClientEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +34,7 @@ public class ClientMapper {
         clientDTO.setIsActive(clientEntity.getIsActive());
         return clientDTO;
     }
-
+    /*
     public Set<ClientDTO> clientEntitySet2DTOSet(Set<ClientEntity> entities){
         return entities.stream().map(client -> new ClientDTO(
                 client.getId(),
@@ -42,4 +45,32 @@ public class ClientMapper {
                 client.getIsActive()
         )).collect(Collectors.toSet());
     }
+
+  */
+
+     public List<ClientDTO> clientsEntityList2DTOList(List<ClientEntity> clients){
+        List<ClientDTO> dtos = new ArrayList<>();
+
+        for(ClientEntity entity : clients){
+            dtos.add(this.clientEntity2DTO(entity));
+        }
+        return dtos;
+    }
+
+    public ClientBasicDTO client2Basic(ClientEntity entity){
+        ClientBasicDTO clientBasicDTO = new ClientBasicDTO();
+        clientBasicDTO.setFirstName(entity.getFirstName());
+        clientBasicDTO.setLastName(entity.getLastName());
+        clientBasicDTO.setActiveUntilDate(entity.getActiveUntilDate());
+        return clientBasicDTO;
+    }
+
+    public List<ClientBasicDTO> clientsEntity2BasicList(List<ClientEntity> clients){
+         List<ClientBasicDTO> clientsList = new ArrayList<>();
+         for(ClientEntity entity : clients){
+             clientsList.add(this.client2Basic(entity));
+         }
+         return clientsList;
+    }
+
 }
