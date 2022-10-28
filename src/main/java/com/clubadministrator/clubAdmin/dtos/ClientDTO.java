@@ -14,6 +14,7 @@ public class ClientDTO {
     private Date startDate;
     private Date activeUntilDate;
     private Boolean isActive;
+    private PlanDTO plan;
 
     public ClientDTO(Long id, String firstName, String lastName, Date startDate, Date activeUntilDate, Boolean isActive) {
         this.id = id;

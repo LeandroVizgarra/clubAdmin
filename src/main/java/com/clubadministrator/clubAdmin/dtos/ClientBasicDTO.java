@@ -12,4 +12,5 @@ public class ClientBasicDTO {
     private String firstName;
     private String lastName;
     private Date activeUntilDate;
+    private PlanBasicDTO plan;
 }

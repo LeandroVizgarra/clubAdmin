@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -30,7 +29,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     public String deleteClient(Long id){
-        ClientEntity entity = clientRepository.getById(id);
+        ClientEntity entity = clientRepository.findById(id).orElseThrow(
+                ()-> new RuntimeException("No Client Found")
+        );
         String name = entity.getFirstName();
         clientRepository.deleteById(id);
         return "Client "+name+" has been deleted";

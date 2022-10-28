@@ -3,6 +3,7 @@ package com.clubadministrator.clubAdmin.mapper;
 import com.clubadministrator.clubAdmin.dtos.ClientBasicDTO;
 import com.clubadministrator.clubAdmin.dtos.ClientDTO;
 import com.clubadministrator.clubAdmin.entities.ClientEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class ClientMapper {
+    @Autowired
+    private PlanMapper planMapper;
 
     public ClientEntity clientDTO2Entity(ClientDTO dto){
         ClientEntity entity = new ClientEntity();
@@ -21,6 +24,7 @@ public class ClientMapper {
         entity.setStartDate(dto.getStartDate());
         entity.setActiveUntilDate(dto.getActiveUntilDate());
         entity.setIsActive(dto.getIsActive());
+        entity.setPlan(planMapper.planDTO2Entity(dto.getPlan()));
         return entity;
     }
 
@@ -32,6 +36,7 @@ public class ClientMapper {
         clientDTO.setStartDate(clientEntity.getStartDate());
         clientDTO.setActiveUntilDate(clientEntity.getActiveUntilDate());
         clientDTO.setIsActive(clientEntity.getIsActive());
+        clientDTO.setPlan(planMapper.planEntity2DTO(clientEntity.getPlan()));
         return clientDTO;
     }
     /*
@@ -62,6 +67,7 @@ public class ClientMapper {
         clientBasicDTO.setFirstName(entity.getFirstName());
         clientBasicDTO.setLastName(entity.getLastName());
         clientBasicDTO.setActiveUntilDate(entity.getActiveUntilDate());
+        clientBasicDTO.setPlan(planMapper.planEntity2BasicDTO(entity.getPlan()));
         return clientBasicDTO;
     }
 
