@@ -8,10 +8,12 @@ import com.clubadministrator.clubAdmin.service.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlanServiceImpl implements PlanService {
-    private PlanMapper planMapper;
-    private PlanRepository planRepository;
+    private final PlanMapper planMapper;
+    private final PlanRepository planRepository;
     @Autowired
     public PlanServiceImpl(PlanMapper planMapper, PlanRepository planRepository) {
         this.planMapper = planMapper;
@@ -22,6 +24,11 @@ public class PlanServiceImpl implements PlanService {
         PlanEntity planEntity = planMapper.planDTO2Entity(planDTO);
         PlanEntity planSaved = planRepository.save(planEntity);
         return planMapper.planEntity2DTO(planSaved);
+    }
+
+    public List<PlanDTO> getAllPlan(){
+        List<PlanEntity> list = planRepository.findAll();
+        return planMapper.planEntityList2DTOList(list);
     }
 
 

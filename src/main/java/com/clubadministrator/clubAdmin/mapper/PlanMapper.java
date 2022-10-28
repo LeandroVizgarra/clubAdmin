@@ -5,6 +5,9 @@ import com.clubadministrator.clubAdmin.dtos.PlanDTO;
 import com.clubadministrator.clubAdmin.entities.PlanEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class PlanMapper {
     public PlanEntity planDTO2Entity(PlanDTO dto){
@@ -27,4 +30,14 @@ public class PlanMapper {
         planBasicDTO.setPrice(entity.getPrice());
         return planBasicDTO;
     }
+
+    public List<PlanDTO> planEntityList2DTOList(List<PlanEntity> plans){
+        List<PlanDTO> dtos = new ArrayList<>();
+
+        for(PlanEntity entity : plans){
+            dtos.add(this.planEntity2DTO(entity));
+        }
+        return dtos;
+    }
+
 }

@@ -16,8 +16,8 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @Table(name="Clients")
-@SQLDelete(sql = "UPDATE clients SET isActive = false WHERE id=?")
-@Where(clause = "isActive = true")
+//@SQLDelete(sql = "UPDATE clients SET isActive = false WHERE id=?")
+//@Where(clause = "isActive = true")
 public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
