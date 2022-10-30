@@ -3,6 +3,7 @@ package com.clubadministrator.clubAdmin.controller;
 import com.clubadministrator.clubAdmin.dtos.ClientBasicDTO;
 import com.clubadministrator.clubAdmin.dtos.ClientDTO;
 import com.clubadministrator.clubAdmin.service.ClientService;
+import com.clubadministrator.clubAdmin.utils.FinalPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,4 +46,15 @@ public class ClubController {
                                                   @RequestBody ClientDTO clientDTO){
         return new ResponseEntity<>(clientService.updateClient(client_id, clientDTO),HttpStatus.OK);
     }
+
+    @GetMapping
+    @RequestMapping("/pag")
+    public ResponseEntity<FinalPage> getAll(@RequestParam(required = false,defaultValue = "1") int page,
+                                            @RequestParam(required = false) String firstName,
+                                            @RequestParam(required = false) String lastName
+    ){
+        FinalPage clients =  clientService.getAll(page,firstName,lastName);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
+    }
+
 }

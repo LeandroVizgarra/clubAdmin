@@ -6,10 +6,16 @@ import com.clubadministrator.clubAdmin.entities.ClientEntity;
 import com.clubadministrator.clubAdmin.mapper.ClientMapper;
 import com.clubadministrator.clubAdmin.repository.ClientRepository;
 import com.clubadministrator.clubAdmin.service.ClientService;
+import com.clubadministrator.clubAdmin.utils.CreatePage;
+import com.clubadministrator.clubAdmin.utils.FinalPage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -57,4 +63,28 @@ public class ClientServiceImpl implements ClientService {
         List<ClientEntity> clients = clientRepository.findAll();
         return clientMapper.clientsEntity2BasicList(clients);
     }
+
+
+    public FinalPage getAll(int page, String firstName, String lastName){
+        Pageable pageable = PageRequest.of(page-1,3);
+        CreatePage createPage = new CreatePage();
+        Boolean isNotNull = notNull(firstName, lastName);
+        if (isNotNull){
+            Page<ClientEntity> clientsFilters = clientRepository.findAllByFirstNameOrLastName(firstName,lastName,pageable);
+            createPage.paginateResult(clientsFilters).loadList(clientsFilters.getContent().stream().map(
+                    clientMapper::client2Basic).collect(Collectors.toList()));
+        }
+        else{
+            Page<ClientEntity> clients = clientRepository.findAll(pageable);
+            createPage.paginateResult(clients).loadList(clients.getContent().stream()
+                    .map(clientMapper::client2Basic).collect(Collectors.toList()));
+        }
+
+        return createPage.build();
+    }
+
+    private Boolean notNull(String firstName, String lastName){
+        return (firstName != null) || (lastName != null);
+    }
+
 }
