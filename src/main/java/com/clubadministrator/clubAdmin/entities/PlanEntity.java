@@ -17,7 +17,10 @@ public class PlanEntity {
     private Long id;
     private String name;
     private Long price;
+    @Enumerated(EnumType.STRING)
+    private PlanType planType;
     @OneToMany
+
     private Set<ClientEntity> clientEntitySet;
 
     public void addClient2Plan(ClientEntity client){

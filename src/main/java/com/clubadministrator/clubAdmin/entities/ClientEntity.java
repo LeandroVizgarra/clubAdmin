@@ -8,6 +8,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 
@@ -24,8 +25,8 @@ public class ClientEntity {
     private Long id;
     private String firstName;
     private String lastName;
-    private Date startDate;
-    private Date activeUntilDate;
+    private LocalDate startDate = LocalDate.now();
+    private LocalDate activeUntilDate = startDate.plusMonths(1);
     private Boolean isActive = Boolean.TRUE;
     @ManyToOne
     @JoinColumn(name="plan_id",insertable = false,updatable = false)

@@ -14,6 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +35,12 @@ public class ClientServiceImpl implements ClientService {
         ClientEntity clientEntity = clientMapper.clientDTO2Entity(clientDTO);
         ClientEntity clientSaved = clientRepository.save(clientEntity);
         return clientMapper.clientEntity2DTO(clientSaved);
+    }
+    public ClientEntity findClientByID(Long id){
+        ClientEntity client = clientRepository.findById(id).orElseThrow(
+                ()-> new RuntimeException("Client not found")
+        );
+        return client;
     }
 
     public String deleteClient(Long id){
@@ -85,6 +94,34 @@ public class ClientServiceImpl implements ClientService {
 
     private Boolean notNull(String firstName, String lastName){
         return (firstName != null) || (lastName != null);
+    }
+
+
+    public List<ClientBasicDTO> getClientsNearToPayment(){
+        List<ClientEntity> clients = clientRepository.findAll();
+        List<ClientBasicDTO> clientsNearToPayment = new ArrayList<>();
+        int date = LocalDate.now().getDayOfYear();
+
+        for(ClientEntity client : clients){
+            if(client.getActiveUntilDate().getDayOfYear() - date < 5){
+                clientsNearToPayment.add(clientMapper.client2Basic(client));
+            }
+        }
+
+        return clientsNearToPayment;
+    }
+
+
+    //TODO Add renew plan
+    //TODO Finish getClientsNearToPayment
+
+    public LocalDate payMonth(Long id){
+        ClientEntity client = this.findClientByID(id);
+        LocalDate actualDate = client.getActiveUntilDate();
+        LocalDate newDate = actualDate.plusMonths(1);
+        client.setActiveUntilDate(newDate);
+        clientRepository.save(client);
+        return newDate;
     }
 
 }

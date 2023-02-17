@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Getter
 @Setter
@@ -11,6 +12,6 @@ import java.util.Date;
 public class ClientBasicDTO {
     private String firstName;
     private String lastName;
-    private Date activeUntilDate;
+    private LocalDate activeUntilDate;
     private PlanBasicDTO plan;
 }

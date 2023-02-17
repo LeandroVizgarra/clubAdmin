@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -55,6 +56,12 @@ public class ClubController {
     ){
         FinalPage clients =  clientService.getAll(page,firstName,lastName);
         return new ResponseEntity<>(clients, HttpStatus.OK);
+    }
+
+    @PostMapping("/payMonth")
+    public ResponseEntity<LocalDate> payMonth(@RequestParam Long id){
+        LocalDate newDate = clientService.payMonth(id);
+        return new ResponseEntity<>(newDate, HttpStatus.ACCEPTED);
     }
 
 }

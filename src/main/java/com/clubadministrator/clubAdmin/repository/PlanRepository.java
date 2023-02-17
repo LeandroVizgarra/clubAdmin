@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PlanRepository extends JpaRepository<PlanEntity,Long> {
     Page<PlanEntity> findAllByNameOrPrice(String name, Long price, Pageable pageable);
+
 }

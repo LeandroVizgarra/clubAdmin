@@ -15,6 +15,7 @@ public class PlanMapper {
         entity.setId(dto.getId());
         entity.setName(dto.getName());
         entity.setPrice(dto.getPrice());
+        entity.setPlanType(dto.getPlanType());
         return entity;
     }
     public PlanDTO planEntity2DTO(PlanEntity entity){
@@ -22,6 +23,7 @@ public class PlanMapper {
         dto.setId(entity.getId());
         dto.setPrice(entity.getPrice());
         dto.setName(entity.getName());
+        dto.setPlanType(entity.getPlanType());
         return dto;
     }
     public PlanBasicDTO planEntity2BasicDTO(PlanEntity entity){
